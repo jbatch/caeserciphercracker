@@ -9,7 +9,7 @@ public class LetterFrequency
 	{
 		char[] stringArray = string.toCharArray();
 
-		count = stringArray.length;
+		count = 0;
 
 		frequencies = new int[26];
 		proportions = new double[26];
@@ -22,6 +22,10 @@ public class LetterFrequency
 		for(char c : stringArray)
 		{
 			inc(c);
+			if('a' <= c && c <= 'z' || 'A' <= c && c <= 'Z')
+			{
+				count++;
+			}
 		}
 
 		for(int i = 0; i < 26; i++)
@@ -88,16 +92,16 @@ public class LetterFrequency
 		return s;
 	}
 
-	public static LetterFrequency shift(LetterFrequency letterFrequency, int shift)
+	public LetterFrequency shift(int shift)
 	{
 		int[] newFrequencies = new int[26];
 
 		for(int i = 0; i < 26; i++)
 		{
-			newFrequencies[i] = letterFrequency.getFreqArray()[(i + (Math.abs(26 - shift%26)))%26];
+			newFrequencies[i] = frequencies[(i + (Math.abs(26 - shift%26)))%26];
 		}
 
-		LetterFrequency newLetterFrequency = new LetterFrequency(newFrequencies, letterFrequency.getCount());
+		LetterFrequency newLetterFrequency = new LetterFrequency(newFrequencies, count);
 		return newLetterFrequency;
 	}
 
@@ -107,7 +111,7 @@ public class LetterFrequency
 
 		for(int i = 0; i < 26; i++)
 		{
-			totalDiff += Math.abs(frequencies[i] - inLetterFrequency.getFreqArray()[i]);
+			totalDiff += Math.abs(proportions[i] - inLetterFrequency.getProportions()[i]);
 		}
 
 		averageDiff = totalDiff / 26;
