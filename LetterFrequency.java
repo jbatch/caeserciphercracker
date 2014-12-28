@@ -1,3 +1,11 @@
+/*
+	LetterFrequency
+	Nice simple little class to represent the frequencies and proportions
+	of letters in a given string. The most important methods are shift
+	and getAverageProportionDefference. These are used to compare the 
+	proportions of two LetterFrequencies and see how similar they are
+*/
+
 public class LetterFrequency
 {
 
@@ -14,11 +22,12 @@ public class LetterFrequency
 		frequencies = new int[26];
 		proportions = new double[26];
 
+		/*Initilise all frequencies to 0*/
 		for(int i = 0; i < 26; i++)
 		{
 			frequencies[i] = 0;
 		}
-
+		/*Ignore any characters that aren't letters*/
 		for(char c : stringArray)
 		{
 			inc(c);
@@ -61,7 +70,9 @@ public class LetterFrequency
 		return count;
 	}
 
-	public void inc(char c)
+	/*Used by constuctor to take away the complication of adding one to 
+	the frequency of a particular character*/
+	private void inc(char c)
 	{
 		int index = -1;
 
@@ -79,6 +90,7 @@ public class LetterFrequency
 		}
 	}
 
+	/*Really only used in debugging. Worth keeping around*/
 	public String toString()
 	{
 		String s = "";
@@ -87,11 +99,12 @@ public class LetterFrequency
 		{
 			s += (char)('a' + i) + "=" + frequencies[i] + ":" + ((double)((int)(10000 * proportions[i]))/100) + "%"+ ", ";
 		}
-		s += "z=" + frequencies[25] + "}";
+		s += "z=" + frequencies[25] + ":" + ((double)((int)(10000 * proportions[25]))/100) + "%"+ "}";
 
 		return s;
 	}
 
+	/*Basically applies a caesar cipher shift to a whole LetterFrequency*/
 	public LetterFrequency shift(int shift)
 	{
 		int[] newFrequencies = new int[26];
@@ -105,6 +118,8 @@ public class LetterFrequency
 		return newLetterFrequency;
 	}
 
+	/*Most important function. Lets you compare two LetterFrequencies.
+	The lower the average difference the more similar they langauages are*/
 	public double getAverageProportionDifference(LetterFrequency inLetterFrequency)
 	{
 		double totalDiff = 0, averageDiff;
